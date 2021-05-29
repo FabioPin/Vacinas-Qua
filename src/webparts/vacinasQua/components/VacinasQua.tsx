@@ -5,15 +5,31 @@ import { escape } from '@microsoft/sp-lodash-subset';
 
 export default class VacinasQua extends React.Component<IVacinasQuaProps, {}> {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoaded: false,
+      items: []
+    };
+  }
+
   public componentDidMount() {
-    fetch('http://localhost:5000/todos')
+    fetch('http://localhost:5000/todos') // fetch a api postgres 
+      .then(res => res.json())
       .then(
         (result) => {
-          this.setState({
-            
-          });
-        }
-      );
+        this.setState({
+          isLoaded: true,
+          items: result.items
+        });
+      },
+      (error) => {
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      });
   }
 
   public render(): React.ReactElement<IVacinasQuaProps> {

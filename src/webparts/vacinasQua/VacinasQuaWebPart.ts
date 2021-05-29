@@ -45,10 +45,10 @@ export default class VacinasQuaWebPart extends BaseClientSideWebPart<IVacinasQua
           },
           groups: [
             {
-              groupName: strings.BasicGroupName,
+              groupName: 'Vacinação Covid Task Force',
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneTextField('SNS', {
+                  label: "Coloque um SNS"
                 })
               ]
             }

@@ -1,16 +1,17 @@
 import * as React from 'react';
 import styles from './VacinasQua.module.scss';
 import { IVacinasQuaProps } from './IVacinasQuaProps';
+import { IVacinasQuaState} from './IVacinasQuaState';
+import {} from 'office-ui-fabric-react/lib/Spinner';
 import { escape } from '@microsoft/sp-lodash-subset';
 
-export default class VacinasQua extends React.Component<IVacinasQuaProps, {}> {
+export default class VacinasQua extends React.Component<IVacinasQuaProps, IVacinasQuaState> {
 
-  constructor(props) {
+  constructor(props: IVacinasQuaProps) {
     super(props);
     this.state = {
-      error: null,
-      isLoaded: false,
-      items: []
+      isLoaded: true,
+      vacinas: []
     };
   }
 
@@ -21,33 +22,31 @@ export default class VacinasQua extends React.Component<IVacinasQuaProps, {}> {
         (result) => {
         this.setState({
           isLoaded: true,
-          items: result.items
+          vacinas: result
         });
       },
       (error) => {
         this.setState({
-          isLoaded: true,
-          error
+          isLoaded: true
         });
       });
+      console.log(this.state.vacinas);
   }
 
+
   public render(): React.ReactElement<IVacinasQuaProps> {
+    const {isLoaded, vacinas } = this.state;
+    if(!isLoaded) {
+      return <div>Loading....</div>;
+    }
     return (
-      <div className={ styles.vacinasQua }>
-        <div className={ styles.container }>
-          <div className={ styles.row }>
-            <div className={ styles.column }>
-              <span className={ styles.title }>Welcome to SharePoint!</span>
-              <p className={ styles.subTitle }>Customize SharePoint experiences using Web Parts.</p>
-              <p className={ styles.description }></p>
-              <a href="https://aka.ms/spfx" className={ styles.button }>
-                <span className={ styles.label }>Learn more</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <table cellPadding={0} cellSpacing={0}>
+        <thead>
+        </thead>
+        <tbody>
+          <p>{this.state.vacinas}</p>
+        </tbody>
+      </table>
     );
   }
 }
